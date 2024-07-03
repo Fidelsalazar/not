@@ -9,6 +9,8 @@ import { MenuSharingService } from '../../services/menu-sharing/menu-sharing.ser
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TagModule } from 'primeng/tag';
+import { AsignMedalComponent } from '../../components/asign-medal/asign-medal.component';
 
 @Component({
   selector: 'app-jose-tey',
@@ -23,10 +25,11 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     HttpClientModule,
     NavbarComponent,
     BreadcrumbModule,
+    TagModule,
   ],
 })
 export class MedalsComponent {
-  customers!: any[];
+  customers: any[] = [];
 
   menuItemLabel: string = '';
 
@@ -82,12 +85,35 @@ export class MedalsComponent {
     });
   }
 
-  getMedal(): void {
-    this.medalsService
-      .getCustomersLarge(this.menuItemLabel)
-      .then((customers) => (this.customers = customers));
+  changeStatus(data: any){
+    console.log('Cambiar status', data);
 
-    console.log(this.customers);
+    const dialogRef = this.dialog.open(AsignMedalComponent, {
+      width: '800px',
+      height: '60%',
+      data
+    });
+
+    dialogRef.componentInstance.modificationSuccess.subscribe(() => {
+      this.getMedal();
+    });
+  }
+
+  getMedal(): void {
+   console.log('Llamando a getCustomersLarge con:', this.menuItemLabel);
+   this.medalsService
+     .getCustomersLarge(this.menuItemLabel)
+     .then((customers) => {
+       this.customers = customers;
+       console.log(
+        'Respuesta de getCustomersLarge:',
+        this.customers,
+        this.customers[0].medals[0].status
+      );
+     })
+     .catch((error) => {
+       console.error('Error en getCustomersLarge:', error);
+     });
   }
 
   next() {
@@ -119,5 +145,19 @@ export class MedalsComponent {
 
   isFirstPage(): boolean {
     return this.customers ? this.first === 0 : true;
+  }
+
+  getStatusSeverity(status: string) {
+    console.log('getStatusSeverity', status)
+    switch (status) {
+      case 'PROPUESTA':
+        return 'warning';
+      case 'ENTREGADA':
+        return 'success';
+      case 'CANCELADA':
+        return 'danger';
+      default:
+        return undefined;
+    }
   }
 }

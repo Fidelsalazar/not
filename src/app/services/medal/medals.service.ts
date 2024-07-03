@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../config';
 import { firstValueFrom } from 'rxjs';
+import { Medals } from '../../core/interface/medals.interface';
+import { Customer } from '../../core/interface/customer.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -37,12 +39,19 @@ export class MedalsService {
     });
   }
 
-  getCustomersLarge( medal : string ): Promise<any> {
+  getCustomersLarge( medal : string ): Promise<Customer[]> {
     return firstValueFrom(
-      this.httpClient.get(
-        `${environment.apiUrl}/medals/getbyname/${medal}`
-      )
-    );
+      this.httpClient.get<Customer[]>(`${environment.apiUrl}/medals/getbyname/${medal}`)
+    )
+      .then((response) => {
+        console.log('Respuesta del servidor:', response);
+        return response; // Continúa con la respuesta si es exitosa.
+      })
+      .catch((error) => {
+        console.error('An error occurred:', error.message);
+        return Promise.reject(error);
+      });
+
   }
 
 

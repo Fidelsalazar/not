@@ -136,7 +136,7 @@ export class EmployeeComponent {
 
   getStatusSeverity(status: string) {
     switch (status) {
-      case 'SOLICITADA':
+      case 'PROPUESTA':
         return 'warning';
       case 'ENTREGADA':
         return 'success';

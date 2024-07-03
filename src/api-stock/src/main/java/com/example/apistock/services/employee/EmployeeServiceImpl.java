@@ -93,10 +93,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         MedalDTO medalDTO = new MedalDTO();
         medalDTO.setId(employeeMedal.getId().getMedalId());
-        medalDTO.setName(employeeMedal.getMedal().getName()); // Copia el nombre de la medalla
+        medalDTO.setName(employeeMedal.getMedal().getName());
         medalDTO.setStatus(employeeMedal.getStatus());
         medalDTO.setFechaEntrega(employeeMedal.getFechaEntrega());
-        medalDTO.setFechaEntrega(employeeMedal.getFechaSolicitud());
+        medalDTO.setFechaSolicitud(employeeMedal.getFechaSolicitud());
 
         medalDTOs.add(medalDTO);
       }

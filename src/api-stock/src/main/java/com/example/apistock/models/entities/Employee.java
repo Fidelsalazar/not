@@ -1,5 +1,7 @@
 package com.example.apistock.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import jakarta.persistence.Entity;
@@ -19,6 +21,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "id"
+)
 public class Employee {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

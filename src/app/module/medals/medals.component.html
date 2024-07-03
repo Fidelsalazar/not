@@ -41,26 +41,48 @@
     >
         <ng-template pTemplate="header">
             <tr>
-                <th style="width:25%">ID</th>
-                <th style="width:25%">Nombre</th>
-                <th style="width:25%">Institución</th>
-                <th style="width:25%">Tiempo de trabajo</th>
-
-            </tr>
+                <th style="width: 5rem"></th>
+                <th >Id </th>
+                <th>Nombre </th>
+                <th>Tiempo de trabajo </th>
+                <th>Tiempo de trabajo en EDU </th>
+                <th>Tiempo de trabajo en el CENEA </th>
+                <th></th>
+              </tr>
         </ng-template>
         <ng-template pTemplate="body" let-customer>
             <tr>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.country.name }}</td>
-                <td>{{ customer.company }}</td>
-                <td>{{ customer.representative.name }}</td>
+              <td>
+
+                </td>
+                <td>{{ customer.idEmpleado }}</td>
+                <td>
+                  {{ customer.nombre }}
+                  {{ customer.apellido1 }}
+                  {{ customer.apellido2 }}
+                </td>
+                <td>{{ customer.fechaEntrada | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ customer.fechaEntradEdu | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ customer.fechaEntradaCNEA | date: 'dd-MM-yyyy' }}</td>
+                <td>
+                  <p-button
+                    [text]="true"
+                    (onClick)="changeStatus(customer)"
+                  >
+                    <p-tag
+                      [value]="customer.medals[0].status"
+                      [severity]="getStatusSeverity(customer.medals[0].status)"
+                    />
+                    <!--<span class="pi pi-trash"></span>-->
+                  </p-button>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
                                 <tr>
                                     <td colspan="6">Esta medalla no ha sido asignada a ningun empleado</td>
                                 </tr>
-                            </ng-template>
+        </ng-template>
         <ng-template pTemplate="paginatorleft">
             <p-button
               type="button"
