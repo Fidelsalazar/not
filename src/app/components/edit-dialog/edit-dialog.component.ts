@@ -132,7 +132,7 @@ export class EditDialogComponent implements OnInit {
       fechaEntradEdu: ['', [Validators.required]],
       fechaEntradaCNEA: ['', [Validators.required]],
       idEmpleado: ['', [Validators.required, Validators.minLength(4)]],
-      noCI: ['', [Validators.required, Validators.pattern('\\d{11}')]],
+      noCI: ['', [Validators.required, Validators.pattern('\\d{11}$')]],
       nombre: ['', [Validators.required, Validators.maxLength(50)]],
       apellido1: ['', [Validators.required, Validators.maxLength(50)]],
       apellido2: ['', [Validators.maxLength(50)]],

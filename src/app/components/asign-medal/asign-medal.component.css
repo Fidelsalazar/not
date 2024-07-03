@@ -1,0 +1,59 @@
+h1{
+  padding: 20px;
+  color: #999;
+}
+
+div {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+p-button {
+  margin-left: 10px;
+}
+
+.button {
+  padding-left: 35%;
+}
+
+.formDist {
+  display: flex;
+  flex-direction: column;
+}
+
+.rigth-container {
+  margin-top: 55px;
+}
+
+.input-full-width {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-full-width input {
+  width: 100%;
+  /* Asegura que el input ocupe todo el ancho disponible */
+}
+
+.input-full-width mat-hint {
+  width: 100%;
+  /* Asegura que el hint ocupe todo el ancho disponible y se muestre debajo del input */
+}
+
+.help {
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #999;
+  font-weight: bold;
+}
+
+.card.flex.justify-content-center {
+  display: flex;
+  justify-content: center;
+  /* Centra los elementos horizontalmente */
+  align-items: center;
+  /* Centra los elementos verticalmente */
+  height: 100%;
+  /* Asegúrate de que el div tenga una altura para que funcione el centrado vertical */
+}
