@@ -5,5 +5,5 @@ import com.example.apistock.models.dto.UsersDTO;
 public interface AuthService {
   boolean registerUser (UsersDTO user);
 
-  boolean loginUser(UsersDTO user);
+  UsersDTO loginUser(UsersDTO user);
 }

@@ -34,19 +34,39 @@ export class NavbarComponent {
   items: MenuItem[] | undefined;
   home: MenuItem | undefined;
 
+  role!: string
+
   constructor(
     private authService: AuthService,
     private menuSharingService: MenuSharingService
   ) {}
 
   ngOnInit() {
+
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.role = userData.role;
+      console.log('Datos en caché:', userData);
+    } else {
+      console.log('No hay datos en caché para userData');
+    }
+
     this.items = [
       {
         label: 'Home',
         icon: 'pi pi-home',
         routerLink: '/dashboard',
       },
-      {
+
+      /* {
+        label: 'Planificación de guardia obrera',
+        icon: 'pi pi-shield',
+      },*/
+    ];
+
+    if ( this.role !== 'user' ) {
+      this.items.push({
         label: 'Condecoraciones',
         icon: 'pi pi-search',
         items: [
@@ -111,11 +131,10 @@ export class NavbarComponent {
             separator: true,
           },
         ],
-      },
-      /* {
-        label: 'Planificación de guardia obrera',
-        icon: 'pi pi-shield',
-      },*/
+      })
+    }
+
+    this.items.push(
       {
         label: 'Trabajadores',
         icon: 'pi pi-users',
@@ -128,8 +147,9 @@ export class NavbarComponent {
         label: 'Salir',
         icon: 'pi pi-fw pi-power-off',
         command: () => this.close(),
-      },
-    ];
+      }
+    );
+
   }
 
   onMenuItemClick(itemLabel: string) {

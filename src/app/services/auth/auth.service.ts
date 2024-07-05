@@ -15,18 +15,32 @@ export class AuthService {
 
   login(username: string, password: string) {
     console.log(`${environment.apiUrl}/auth/login`);
+
     return this.http
       .post(`${environment.apiUrl}/auth/login`, { username, password })
       .pipe(
-        tap(() => {
+        tap((response) => {
+          console.log(response)
+          localStorage.setItem(
+            'userData',
+            JSON.stringify(response)
+          )
           this.loggedIn.next(true);
           this.router.navigate(['/dashboard']);
+
+          const userDataString = localStorage.getItem('userData');
+          if (userDataString) {
+            const userData = JSON.parse(userDataString);
+            console.log('Datos en caché:', userData);
+          } else {
+            console.log('No hay datos en caché para userData');
+          }
         })
       );
   }
 
-  register(username: string, password: string): Observable<any> {
-    const user = { username, password };
+  register(username: string, password: string, rol: string): Observable<any> {
+    const user = { username, password, rol };
     return this.http.post(`${environment.apiUrl}/auth/register`, user);
   }
 
@@ -37,6 +51,7 @@ export class AuthService {
 
   logout() {
     // Lógica de cierre de sesión
+    localStorage.clear();
     this.setLoggedIn(false);
     this.router.navigate(['/']);
   }

@@ -62,9 +62,15 @@ import { InputOtpModule } from 'primeng/inputotp';
     BadgeModule,
     ProgressBarModule,
     ToastModule,
-    InputOtpModule
+    InputOtpModule,
   ],
-  providers: [CustomerService, MedalsService, MessageService, PrimeNGConfig],
+  providers: [
+    CustomerService,
+    MedalsService,
+    MessageService,
+    PrimeNGConfig,
+    MedalsService,
+  ],
   templateUrl: './asign-medal.component.html',
   styleUrl: './asign-medal.component.css',
 })
@@ -94,6 +100,7 @@ export class AsignMedalComponent {
     //private customerService: CustomerService,
     private config: PrimeNGConfig,
     private messageService: MessageService,
+    private medalsService: MedalsService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AsignMedalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -110,6 +117,21 @@ export class AsignMedalComponent {
 
   initChangeForm() {
     this.changeForm = this.fb.group({});
+  }
+
+  send() {
+    console.log('Servicio asignar medalla');
+
+    this.medalsService.changeStatus(
+      this.dataResive.id,
+      this.dataResive.medals[0].id
+    ).subscribe({
+      next: () => {
+        console.log('Datos enviados correctamente:');
+
+        this.close();
+      },
+    });
   }
 
   choose(event: any, callback: () => void) {
@@ -172,5 +194,9 @@ export class AsignMedalComponent {
     const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
 
     return `${formattedSize} ${sizes[i]}`;
+  }
+
+  close(): void {
+    this.dialogRef.close();
   }
 }

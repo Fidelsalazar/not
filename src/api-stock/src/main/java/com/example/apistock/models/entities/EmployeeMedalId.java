@@ -28,4 +28,12 @@ public class EmployeeMedalId implements Serializable {
   public void setMedalId(Long medalId) {
     this.medalId = medalId;
   }
+
+  public EmployeeMedalId(Long employeeId, Long medalId) {
+    this.employeeId = employeeId;
+    this.medalId = medalId;
+  }
+
+  public EmployeeMedalId() {
+  }
 }

@@ -19,6 +19,7 @@ import { CustomerService } from '../../services/customer/customer.service';
 import { Customer } from '../../core/interface/customer.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -45,15 +46,17 @@ import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.co
   providers: [AuthService, MessageService, CustomerService],
 })
 export class EmployeeComponent {
-
   customers: any[] = [];
   products!: Customer[];
   expandedRows = {};
+
+  role!: string;
 
   constructor(
     public authService: AuthService,
     private customerService: CustomerService,
     private messageService: MessageService,
+    private router: Router,
     private dialog: MatDialog
   ) {}
 
@@ -96,15 +99,25 @@ export class EmployeeComponent {
   }
 
   getEmployee(): void {
-    this.customerService.getAllCustomers().subscribe({
-      next: (response) => {
-        this.customers = response;
-        console.log('Recibido en componente Employee', response);
-      },
-      error: (error) => {
-        console.log('Error obteniendo datos', error);
-      },
-    });
+
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      console.log('Datos en caché:', userData.role);
+      this.role = userData.role;
+      this.customerService.getAllCustomers(userData).subscribe({
+        next: (response) => {
+          this.customers = response;
+          console.log('Recibido en componente Employee', response);
+        },
+        error: (error) => {
+          console.log('Error obteniendo datos', error);
+        },
+      });
+    } else {
+      console.log('No hay datos en caché para userData');
+      this.router.navigate(['/login']);
+    }
   }
 
   expandAll(): void {

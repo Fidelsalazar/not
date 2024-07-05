@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../config';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { Medals } from '../../core/interface/medals.interface';
 import { Customer } from '../../core/interface/customer.interface';
 
@@ -54,6 +54,13 @@ export class MedalsService {
 
   }
 
+  changeStatus(id: any, id1: any): Observable<any>{
+    console.log('Change Status Service',id)
+    return this.httpClient.post<any>(
+      `${environment.apiUrl}/medals/change-status/${id}-${id1}`,
+      'ENTREGADA'
+    )
+  }
 
 
   /*getCustomersLarge(): Promise<any> {

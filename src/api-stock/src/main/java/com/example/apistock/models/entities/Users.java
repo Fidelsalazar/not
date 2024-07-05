@@ -33,5 +33,9 @@ public class Users {
   @Column
   private String username;
   @Column
+  private String name;
+  @Column
   private String password;
+  @Column
+  private String role;
 }

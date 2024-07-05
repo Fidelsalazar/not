@@ -43,9 +43,10 @@ public class AuthController {
   public ResponseEntity<?> loginUser(
     @RequestBody UsersDTO user
   ) {
-    boolean isLogged = authService.loginUser(user);
-    if (isLogged) {
-      return ResponseEntity.ok(HttpStatus.OK);
+    UsersDTO isLogged = authService.loginUser(user);
+    if (isLogged != null) {
+      log.info(isLogged.toString());
+      return new ResponseEntity<>(isLogged, HttpStatus.OK);
     }else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el registro");
     }

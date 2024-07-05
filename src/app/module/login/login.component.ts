@@ -75,7 +75,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
       this.subscription = this.authService
-        .register(username, password)
+        .register(username, password, 'user')
         .subscribe({
           next: (response) => {
             console.log('Registro exitoso', response);

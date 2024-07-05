@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../config';
@@ -66,8 +66,14 @@ export class CustomerService {
       .pipe(catchError(this.handleError));
   }
 
-  getAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${environment.apiUrl}/employee/all`).pipe(
+  getAllCustomers(user: any): Observable<Customer[]> {
+
+    const params = new HttpParams()
+      .set('username', user.username)
+      .set('password', user.password)
+      .set('name', user.name)
+
+    return this.http.get<Customer[]>(`${environment.apiUrl}/employee/${user.role}/all`, {params}).pipe(
       tap((data) => {
         console.log('Datos recibidos:', data);
       }),

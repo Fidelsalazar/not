@@ -3,9 +3,9 @@
 <br>
 
 <div>
-  <h3>
+  <h1>
     {{menuItemLabel}}
-  </h3>
+  </h1>
 </div>
 
 <div class="mb-3">
@@ -46,12 +46,14 @@
                 <th>Nombre </th>
                 <th>Tiempo de trabajo </th>
                 <th>Tiempo de trabajo en EDU </th>
-                <th>Tiempo de trabajo en el CENEA </th>
+                <th>Tiempo de trabajo en el CNEA </th>
                 <th></th>
               </tr>
         </ng-template>
         <ng-template pTemplate="body" let-customer>
-            <tr>
+            <tr
+              *ngIf="customer.medals[0].status ==='PROPUESTA'"
+            >
               <td>
 
                 </td>
@@ -84,12 +86,12 @@
                                 </tr>
         </ng-template>
         <ng-template pTemplate="paginatorleft">
-            <p-button
+            <!--<p-button
               type="button"
               icon="pi pi-plus"
               styleClass="p-button-text"
               (onClick)="newMedal('create', 'Medalla', 'new')"
-            />
+            />-->
         </ng-template>
         <ng-template pTemplate="paginatorright">
             <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" />

@@ -4,7 +4,9 @@ import com.example.apistock.models.dto.EmployeeDTO;
 import com.example.apistock.models.dto.MedalDTO;
 import com.example.apistock.models.entities.Employee;
 import com.example.apistock.models.entities.EmployeeMedal;
+import com.example.apistock.models.entities.EmployeeMedalId;
 import com.example.apistock.models.entities.Medal;
+import com.example.apistock.repositories.EmployeeMedalRepository;
 import com.example.apistock.repositories.EmployeeRepository;
 import com.example.apistock.repositories.MedalRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,17 +16,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class MedalsServiceImpl implements MedalsService {
 
   private final MedalRepository medalRepository;
-  private final EmployeeRepository employeeRepository;
+  private final EmployeeMedalRepository employeeMedalRepository;
 
-  public MedalsServiceImpl(MedalRepository medalRepository, EmployeeRepository employeeRepository) {
+  public MedalsServiceImpl(MedalRepository medalRepository, EmployeeRepository employeeRepository, EmployeeMedalRepository employeeMedalRepository) {
     this.medalRepository = medalRepository;
-    this.employeeRepository = employeeRepository;
+    this.employeeMedalRepository = employeeMedalRepository;
   }
 
   @Override
@@ -68,5 +71,29 @@ public class MedalsServiceImpl implements MedalsService {
     }
     return null;
 
+  }
+
+  @Override
+  public Boolean changeStatus(
+    EmployeeMedalId id,
+    String change
+  ){
+    try {
+
+      Optional<EmployeeMedal> medal = employeeMedalRepository.findById(id);
+
+      if(medal.isPresent()){
+        EmployeeMedal medal1 = medal.get();
+
+        medal1.setStatus(change);
+
+        employeeMedalRepository.save(medal1);
+      }
+
+      return true;
+    }catch (Exception e) {
+      log.error(String.valueOf(e));
+    }
+    return null;
   }
 }

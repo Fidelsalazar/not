@@ -32,10 +32,16 @@ public class EmployeeController {
     );
   }
 
-  @GetMapping("/all")
-  public ResponseEntity<List<EmployeeDTO>> getAllAireVentana() throws  Exception {
+  @GetMapping("/{role}/all")
+  public ResponseEntity<List<EmployeeDTO>> getAllAireVentana(
+    @PathVariable String role,
+    @RequestParam String username,
+    @RequestParam String password,
+    @RequestParam String name
+  ) throws  Exception {
+    log.info(username, password, name, role);
     return new ResponseEntity<>(
-      employeeService.getAll(),
+      employeeService.getAll(role, username, password, name),
       HttpStatus.OK
     );
   }

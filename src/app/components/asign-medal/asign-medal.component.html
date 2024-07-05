@@ -1,13 +1,12 @@
 <h1 mat-dialog-title>Asignar Medalla</h1>
 
 <p class="help">
-  Para asignar medalla debe subir el archivo en formato pdf o imagen con el nombre de la resolución en el nombre del documento
+  Para asignar una medalla debe subir el archivo en formato pdf o imagen con el nombre de la resolución en el nombre del documento
 
 </p>
 <p class="help">
   Ejemplo: R1234S.pdf
 </p>
-<p class="help"> A continuación introducir la controsaña autorizada</p>
 
 <div #container></div>
 
@@ -15,7 +14,7 @@
   <div class="card flex flex-column md:flex-row gap-3">
     <form
       [formGroup] = "changeForm"
-
+      (ngSubmit)="send()"
     >
       <div class="formDist">
         <div>
@@ -80,20 +79,24 @@
               </ng-template>
           </p-fileUpload>
         </div>
-        <div
+        <!--<div
           class="card flex justify-content-center"
         >
             <p-inputOtp
               [(ngModel)]="value"
               [mask]="true"
-              />
-        </div>
+            />
+        </div>-->
       </div>
 
       <br/>
       <div class="card flex justify-content-center button">
+        <p-button label="Cancelar" severity="danger"  />
+        <p-button
+          type="submit"
+          label="Enviar"
 
-        <p-button type="submit" label="Enviar" />
+        />
       </div>
     </form>
   </div>
